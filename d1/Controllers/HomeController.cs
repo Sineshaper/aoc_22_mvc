@@ -8,7 +8,10 @@ namespace d1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly FoodManager _foodManager = new FoodManager();
 
+        public List<string> _totalSupply = FileReader.ReadFile(Resource.pathToFile.ToString());
+        
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -16,13 +19,19 @@ namespace d1.Controllers
 
         public IActionResult Index()
         {
-            string pathToFile = @"J:\Repo\aoc_22_mvc\d1\Info\input.txt";
-            var supply = FileReader.ReadFile(pathToFile);
-            FoodManager foodManager = new FoodManager();
-            var winner = foodManager.GetElfWithTheMostSupply(foodManager.DistributeFoodToElves(supply));
-
-            return View(winner);
+            return View(_foodManager.GetElfWithTheMostSupply(_foodManager.DistributeFoodToElves(_totalSupply)));
         }
+        public IActionResult AllElves()
+        {
+            List<Elf> elves = _foodManager.DistributeFoodToElves(_totalSupply);
+            return View(elves);
+        }
+        public IActionResult GetTopThreeElvesWithTheHighestCalories()
+        {
+            List<Elf> theThreeOnes = _foodManager.GetTopThreeElvesWithTheHighestCalories(_foodManager.DistributeFoodToElves(_totalSupply));
+            return View(theThreeOnes);
+        }
+        
 
         public IActionResult Privacy()
         {

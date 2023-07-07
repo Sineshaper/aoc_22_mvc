@@ -1,4 +1,5 @@
 ﻿using d1.Models;
+using System.Collections.Generic;
 
 namespace d1.Extensions
 {
@@ -60,6 +61,16 @@ namespace d1.Extensions
                 }
             }
             return mvpElf;
+        }
+
+
+        public List<Elf> GetTopThreeElvesWithTheHighestCalories(List<Elf> elves)
+        {
+            var top3 = (from e in elves
+                        orderby e.CalorieSum descending
+                        select e).Take(3).ToList();
+
+            return top3;
         }
     }
 }
