@@ -1,4 +1,5 @@
-﻿using d1.Models;
+﻿using d1.Extensions;
+using d1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,7 +16,12 @@ namespace d1.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            string pathToFile = @"J:\Repo\aoc_22_mvc\d1\Info\input.txt";
+            var supply = FileReader.ReadFile(pathToFile);
+            FoodManager foodManager = new FoodManager();
+            var winner = foodManager.GetElfWithTheMostSupply(foodManager.DistributeFoodToElves(supply));
+
+            return View(winner);
         }
 
         public IActionResult Privacy()

@@ -1,8 +1,29 @@
-﻿@{
+﻿@model d1.Models.Elf
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2> Elf with id: @Model.Id has a total foodsupply of: @Model.CalorieSum calories</h2>
+    <p>This table shows the elfs foodcontainer content and the id of the whole expeditionsupply</p>
+    <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Food Id</th>
+                <th>Calories per Food</th>
+            </tr>
+
+        @foreach (var food in Model.FoodContainer)
+        {
+            <tr style="border: 2px solid black;">
+
+                <td>
+                    @Html.DisplayFor(model => food.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => food.Calories)
+                </td>
+
+            </tr>
+        }
+        </table>
 </div>
